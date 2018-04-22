@@ -3,7 +3,7 @@ import { View, Text, FlatList } from "react-native";
 import styled from "styled-components";
 import { List, ListItem } from "react-native-elements";
 
-class PackagesOverview extends Component {
+class Packages extends Component {
   _sendNotification(key) {
     this.props.socketClient.emit("delivery:change-home-notification", {
       packageId: key
@@ -19,13 +19,13 @@ class PackagesOverview extends Component {
               key: "a",
               name: "Karel Appelman",
               address: "Bergweg 127A",
-              note: "bla bla bla bla bla"
+              avatar: "https://source.unsplash.com/category/objects/200x150/"
             },
             {
               key: "b",
               name: "Jan de Groot",
               address: "Bergweg 127B",
-              note: "bla bla bla bla bla"
+              avatar: "https://source.unsplash.com/category/objects/200x150/"
             }
           ]}
           renderItem={({ item }) => (
@@ -34,8 +34,8 @@ class PackagesOverview extends Component {
               underlayColor="#7CE065"
               key={item.key}
               title={item.name}
-              address={item.address}
-              note={item.note}
+              subtitle={item.address}
+              avatar={item.avatar}
             />
           )}
         />
@@ -44,4 +44,4 @@ class PackagesOverview extends Component {
   }
 }
 
-export default PackagesOverview;
+export default Packages;
