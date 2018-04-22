@@ -31,6 +31,8 @@ class Packages extends Component {
           renderItem={({ item }) => (
             <ListItem
               onPress={() => this._sendNotification(item.key)}
+              roundAvatar
+              hideChevron
               underlayColor="#7CE065"
               key={item.key}
               title={item.name}
