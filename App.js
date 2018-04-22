@@ -13,21 +13,21 @@ const App = TabNavigator(
     Packages: {
       screen: Packages,
       navigationOptions: {
-        tabBarIcon: <Icon name="package" type="octicon" color="#1FB5FC" />,
+        tabBarIcon: <Icon name="package-down" type="material-community" color="#1FB5FC" />,
         tabBarLabel: "Packages"
       }
     },
     Scan: {
       screen: Scan,
       navigationOptions: {
-        tabBarIcon: <Icon name="diff-added" type="octicon" color="#1FB5FC" />,
-        tabBarLabel: "Scan"
+        tabBarIcon: <Icon reverse name="qrcode-scan" type="material-community" color="#1FB5FC" />,
+        tabBarLabel: " "
       }
     },
     Account: {
       screen: Account,
       navigationOptions: {
-        tabBarIcon: <Icon name="smiley" type="octicon" color="#1FB5FC" />,
+        tabBarIcon: <Icon name="account" type="material-community" color="#1FB5FC" />,
         tabBarLabel: "Account"
       }
     }
