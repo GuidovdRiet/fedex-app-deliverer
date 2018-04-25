@@ -29,26 +29,45 @@ const App = TabNavigator(
     Packages: {
       screen: mapSocketClientToNavigation(Packages),
       navigationOptions: {
-        tabBarIcon: <Icon name="package-down" type="material-community" color="#1FB5FC" />,
+        tabBarIcon: (
+          <Icon name="package-down" type="material-community" color="#fff" />
+        ),
         tabBarLabel: "Packages"
       }
     },
     Scan: {
       screen: mapSocketClientToNavigation(Scan),
       navigationOptions: {
-        tabBarIcon: <Icon reverse name="qrcode-scan" type="material-community" color="#1FB5FC" />,
+        tabBarIcon: (
+          <Icon
+            reverse
+            name="qrcode-scan"
+            type="material-community"
+            color="#FC6621"
+          />
+        ),
         tabBarLabel: " "
       }
     },
     Account: {
       screen: mapSocketClientToNavigation(Account),
       navigationOptions: {
-        tabBarIcon: <Icon name="account" type="material-community" color="#1FB5FC" />,
+        tabBarIcon: (
+          <Icon name="account" type="material-community" color="#fff" />
+        ),
         tabBarLabel: "Account"
       }
     }
   },
   {
+    tabBarOptions: {
+      style: {
+        backgroundColor: "#4D1C8A",
+        inactiveBackgroundColor: "red",
+        inactiveTintColor: "blue",
+        activeTintColor: "red"
+      }
+    },
     order: ["Packages", "Scan", "Account"],
     animationEnabled: true
   }
