@@ -76,9 +76,6 @@ const App = TabNavigator(
         tabBarOptions: {
             style: {
                 backgroundColor: '#4D1C8A'
-                // inactiveBackgroundColor: "red",
-                // inactiveTintColor: 'blue',
-                // activeTintColor: 'red'
             }
         },
         order: ['Packages', 'Scan', 'Account'],

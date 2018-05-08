@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { get } from 'axios';
 import { View, Text, FlatList } from 'react-native';
 import styled from 'styled-components';
 import { List, ListItem } from 'react-native-elements';
@@ -62,30 +63,50 @@ const data = [
 ];
 
 class Packages extends Component {
-    _sendNotification(key) {
-        this.props.socketClient.emit('delivery:change-home-notification', {
-            packageId: key
+    state = {
+        data: []
+    };
+
+    async fetchDeliveryList(delivererId) {
+        const {
+            data: { deliveries: data }
+        } = await get(`http://127.0.0.1:7000/delivery/${delivererId}`);
+        this.setState({
+            data: data.map((item, i) => {
+                item.key = String(i);
+                return item;
+            })
         });
+    }
+
+    async componentDidMount() {
+        await this.fetchDeliveryList('5ac38977f36d287dbca60345');
+
+        // this.props.socketClient.on('delivery:data-update', async () => {
+        //     const { data } = await this.fetchDeliveryList(
+        //         '5ac38977f36d287dbca60345'
+        //     );
+        //     this.setState({ data });
+        // });
+
+        console.log(this.state.data);
     }
 
     render() {
         return (
             <List>
                 <FlatList
-                    data={data.map((item, i) => {
-                        item.key = String(i);
-                        return item;
-                    })}
+                    data={this.state.data}
+                    extraData={this.state.data}
                     renderItem={({ item }) => (
                         <ListItem
-                            onPress={() => this._sendNotification(item.key)}
                             roundAvatar
                             hideChevron
                             underlayColor="#7CE065"
                             key={item.key}
-                            title={item.name}
-                            subtitle={item.address}
-                            avatar={item.avatar}
+                            title={item.deliverer}
+                            // subtitle={item.address}
+                            // avatar={item.avatar}
                         />
                     )}
                 />
