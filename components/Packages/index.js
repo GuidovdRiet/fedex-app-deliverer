@@ -4,6 +4,10 @@ import { View, Text, FlatList } from "react-native";
 import styled from "styled-components";
 import { List, ListItem } from "react-native-elements";
 
+// const StyledListItem = styled(ListItem)`
+//     background-color: red;
+// `;
+
 class Packages extends Component {
     state = {
         data: []
@@ -34,14 +38,26 @@ class Packages extends Component {
 
     renderItems = ({ item }) => {
         const { consumer, address } = item.packages[0];
+        console.log(item);
+        const backgroundColor =
+            item.isAtHome === undefined
+                ? "#fff"
+                : item.isAtHome === false
+                    ? "#ffc6c6"
+                    : "#c6ffdb";
+        console.log(item.isAtHome);
         return (
             <ListItem
                 roundAvatar
                 hideChevron
-                underlayColor="#7CE065"
+                // underlayColor="#7CE065"
                 key={item.key}
                 title={consumer.name}
                 subtitle={`${address.zip}`}
+                containerStyle={{
+                    backgroundColor
+                }}
+                // subtitleStyle={{ color: "white" }}
                 // avatar={item.avatar}
                 avatar={"https://unsplash.it/400"}
             />

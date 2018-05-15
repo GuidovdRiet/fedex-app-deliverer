@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { Text, View } from "react-native";
+import styled from "styled-components";
 
 class Scan extends Component {
     //TODO: move to parent (propMapper to be exact)
@@ -9,23 +9,23 @@ class Scan extends Component {
     }
 
     render() {
-        const delivererId = '5ac38977f36d287dbca60345';
+        const delivererId = "5ac38977f36d287dbca60345";
         return (
             <Container>
                 <ScanButtonContainer
                     onPress={() => {
-                        this._emitSocket('package:scanned', {
+                        this._emitSocket("package:scanned", {
                             delivererId,
-                            consumerId: '5ac383eb7746fb3c67364b84',
-                            zip: '3037EE',
-                            number: '127a'
+                            consumerId: "5afad0f28e12c10c40f1873f",
+                            zip: "3037EE",
+                            number: "127a"
                         });
 
-                        this._emitSocket('package:scanned', {
+                        this._emitSocket("package:scanned", {
                             delivererId,
-                            consumerId: '5ae1bae313a850016734496f',
-                            zip: '1234AB',
-                            number: '56'
+                            consumerId: "5ae1bae313a850016734496f",
+                            zip: "1234AB",
+                            number: "56"
                         });
                     }}
                     underlayColor="#4747CB"
@@ -34,7 +34,7 @@ class Scan extends Component {
                 </ScanButtonContainer>
                 <DoneScanningButton
                     onPress={() =>
-                        this._emitSocket('package:done-scanning', {
+                        this._emitSocket("package:done-scanning", {
                             delivererId
                         })
                     }
