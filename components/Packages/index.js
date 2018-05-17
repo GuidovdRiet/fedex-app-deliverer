@@ -2,117 +2,84 @@ import React, { Component } from "react";
 import { get } from "axios";
 import { View, Text, FlatList } from "react-native";
 import styled from "styled-components";
-import { List, ListItem } from "react-native-elements";
-
-const data = [
-  {
-    name: "Karel Appelman",
-    address: "Bergweg 127A",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  },
-  {
-    name: "Jan de Groot",
-    address: "Bergweg 127B",
-    avatar: "https://source.unsplash.com/category/objects/200x150/"
-  }
-];
+import { List, ListItem, Button } from "react-native-elements";
+import call from "react-native-phone-call";
+// const StyledListItem = styled(ListItem)`
+//     background-color: red;
+// `;
 
 class Packages extends Component {
-  state = {
-    data: []
-  };
+    state = {
+        data: []
+    };
 
-  async fetchDeliveryList(delivererId) {
-    const {
-      data: { deliveries: data }
-    } = await get(`http://127.0.0.1:7000/delivery/${delivererId}`);
-    this.setState({
-      data: data.map((item, i) => {
-        item.key = String(i);
-        return item;
-      })
-    });
-  }
+    async fetchDeliveryList(delivererId) {
+        const {
+            data: { deliveries: data }
+        } = await get(`https://127.0.0.1:7000/delivery/${delivererId}`);
 
-  async componentDidMount() {
-    await this.fetchDeliveryList("5ac38977f36d287dbca60345");
+        this.setState({
+            data: data.map((item, i) => {
+                item.key = String(i);
+                return item;
+            })
+        });
+        console.log(data);
+    }
 
-    // this.props.socketClient.on('delivery:data-update', async () => {
-    //     const { data } = await this.fetchDeliveryList(
-    //         '5ac38977f36d287dbca60345'
-    //     );
-    //     this.setState({ data });
-    // });
+    async componentDidMount() {
+        await this.fetchDeliveryList("5ac38977f36d287dbca60345");
+        this.props.socketClient.on("delivery:init", async () => {
+            await this.fetchDeliveryList("5ac38977f36d287dbca60345");
+        });
+        this.props.socketClient.on("delivery:data-update", async () => {
+            await this.fetchDeliveryList("5ac38977f36d287dbca60345");
+        });
+    }
 
-    console.log(this.state.data);
-  }
-
-  render() {
-    return (
-      <List>
-        <FlatList
-          data={this.state.data}
-          extraData={this.state.data}
-          renderItem={({ item }) => (
+    renderItems = ({ item }) => {
+        const { consumer, address } = item.packages[0];
+        const backgroundColor =
+            item.isAtHome === undefined
+                ? "#fff"
+                : item.isAtHome === false
+                    ? "#ffc6c6"
+                    : "#c6ffdb";
+        console.log(item.isAtHome);
+        return (
             <ListItem
-              roundAvatar
-              hideChevron
-              underlayColor="#7CE065"
-              key={item.key}
-              title={item.deliverer}
-              // subtitle={item.address}
-              // avatar={item.avatar}
+                roundAvatar
+                // hideChevron
+                // underlayColor="#7CE065"
+                key={item.key}
+                title={consumer.name}
+                subtitle={`${address.zip}`}
+                containerStyle={{
+                    backgroundColor
+                }}
+                rightIcon={{ name: "phone", style: { color: "green" } }}
+                onPress={() => {
+                    call({
+                        number: `+31${String(consumer.phone)}`,
+                        prompt: true
+                    }).catch(console.error);
+                }}
+                avatar={"https://unsplash.it/400"}
             />
-          )}
-        />
-      </List>
-    );
-  }
+        );
+    };
+
+    render() {
+        return (
+            <List>
+                <FlatList
+                    data={this.state.data}
+                    extraData={this.state.data}
+                    renderItem={this.renderItems}
+                />
+            </List>
+        );
+    }
 }
 
 export default Packages;

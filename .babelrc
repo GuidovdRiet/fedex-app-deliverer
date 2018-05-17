@@ -1,8 +1,13 @@
 {
-    "presets": ["babel-preset-expo", "react-native"],
-    "env": {
-        "development": {
-            "plugins": ["transform-react-jsx-source"]
-        }
+  "presets": [
+    "babel-preset-react-native-stage-0/decorator-support",
+    "react-native"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "transform-react-jsx-source"
+      ]
     }
+  }
 }
