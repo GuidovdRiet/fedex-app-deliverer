@@ -16,7 +16,7 @@ class Packages extends Component {
     async fetchDeliveryList(delivererId) {
         const {
             data: { deliveries: data }
-        } = await get(`http://127.0.0.1:7000/delivery/${delivererId}`);
+        } = await get(`https://127.0.0.1:7000/delivery/${delivererId}`);
 
         this.setState({
             data: data.map((item, i) => {
@@ -24,6 +24,7 @@ class Packages extends Component {
                 return item;
             })
         });
+        console.log(data);
     }
 
     async componentDidMount() {
@@ -38,7 +39,6 @@ class Packages extends Component {
 
     renderItems = ({ item }) => {
         const { consumer, address } = item.packages[0];
-        console.log(item);
         const backgroundColor =
             item.isAtHome === undefined
                 ? "#fff"
