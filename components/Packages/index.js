@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { get } from "axios";
 import { View, Text, FlatList } from "react-native";
 import styled from "styled-components";
-import { List, ListItem } from "react-native-elements";
-
+import { List, ListItem, Button } from "react-native-elements";
+import call from "react-native-phone-call";
 // const StyledListItem = styled(ListItem)`
 //     background-color: red;
 // `;
@@ -49,7 +49,7 @@ class Packages extends Component {
         return (
             <ListItem
                 roundAvatar
-                hideChevron
+                // hideChevron
                 // underlayColor="#7CE065"
                 key={item.key}
                 title={consumer.name}
@@ -57,8 +57,13 @@ class Packages extends Component {
                 containerStyle={{
                     backgroundColor
                 }}
-                // subtitleStyle={{ color: "white" }}
-                // avatar={item.avatar}
+                rightIcon={{ name: "phone", style: { color: "green" } }}
+                onPress={() => {
+                    call({
+                        number: `+31${String(consumer.phone)}`,
+                        prompt: true
+                    }).catch(console.error);
+                }}
                 avatar={"https://unsplash.it/400"}
             />
         );
