@@ -1,69 +1,72 @@
+"use strict";
 import React, { Component } from "react";
-import { Text, View } from "react-native";
-import styled from "styled-components";
+import {
+  AppRegistry,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import { RNCamera } from "react-native-camera";
 
-class Scan extends Component {
-  //TODO: move to parent (propMapper to be exact)
-  _emitSocket(e, payload) {
-    this.props.socketClient.emit(e, payload);
-  }
+export default class Scan extends Component {
+  takePicture = async function() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.takePictureAsync(options);
+      console.log(data.uri);
+    }
+  };
 
   render() {
-    const delivererId = "5ac38977f36d287dbca60345";
     return (
-      <Container>
-        <ScanButtonContainer
-          onPress={() => {
-            this._emitSocket("package:scanned", {
-              delivererId,
-              consumerId: "5afad0f28e12c10c40f1873f",
-              zip: "3037EE",
-              number: "127a"
-            });
-
-            this._emitSocket("package:scanned", {
-              delivererId,
-              consumerId: "5ae1bae313a850016734496f",
-              zip: "1234AB",
-              number: "56"
-            });
+      <View style={styles.container}>
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
           }}
-          underlayColor="#4747CB"
-        >
-          <ScanButton>Scanning package..</ScanButton>
-        </ScanButtonContainer>
-        <DoneScanningButton
-          onPress={() =>
-            this._emitSocket("package:done-scanning", {
-              delivererId
-            })
+          style={styles.preview}
+          type={RNCamera.Constants.Type.back}
+          flashMode={RNCamera.Constants.FlashMode.on}
+          permissionDialogTitle={"Permission to use camera"}
+          permissionDialogMessage={
+            "We need your permission to use your camera phone"
           }
+        />
+        <View
+          style={{ flex: 0, flexDirection: "row", justifyContent: "center" }}
         >
-          <ScanButton>Done scanning batch</ScanButton>
-        </DoneScanningButton>
-      </Container>
+          <TouchableOpacity
+            onPress={this.takePicture.bind(this)}
+            style={styles.capture}
+          >
+            <Text style={{ fontSize: 14 }}> SNAP </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 }
 
-export default Scan;
-
-const Container = styled.View`
-  flex: 1;
-`;
-
-const ScanButtonContainer = styled.TouchableHighlight`
-  background-color: #4c1d89;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  flex: 1;
-`;
-
-const ScanButton = styled.Text`
-  color: #efeded;
-  font-size: 18;
-  margin-left: 15;
-`;
-
-const DoneScanningButton = styled.TouchableHighlight``;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "black"
+  },
+  preview: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
+  capture: {
+    flex: 0,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    padding: 15,
+    paddingHorizontal: 20,
+    alignSelf: "center",
+    margin: 20
+  }
+});
