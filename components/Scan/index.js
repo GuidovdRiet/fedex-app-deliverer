@@ -1,52 +1,79 @@
 "use strict";
 
 import React, { Component } from "react";
-
-import {
-  AppRegistry,
-  StyleSheet,
-  NavigatorIOS,
-  Dimensions
-} from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 
 import QRCodeScanner from "react-native-qrcode-scanner";
+import styled from "styled-components";
 
 class Scan extends Component {
+  nextPackage() {
+    this.scanner.reactivate();
+  }
+
+  doneScanning() {
+    console.log("done scanning");
+  }
+
   onSuccess(e) {
     console.log(e.data);
-    // Linking.openURL(e.data).catch(err =>
-    //   console.error("An error occured", err)
-    // );
   }
 
   render() {
     return (
-      <NavigatorIOS
-        initialRoute={{
-          component: QRCodeScanner,
-          title: "Scan Package QR",
-          passProps: {
-            onRead: this.onSuccess.bind(this),
-            cameraStyle: styles.cameraContainer,
-            topViewStyle: styles.zeroContainer,
-            bottomViewStyle: styles.zeroContainer
-          }
+      <QRCodeScanner
+        onRead={this.onSuccess.bind(this)}
+        ref={node => {
+          this.scanner = node;
         }}
-        style={{ flex: 1 }}
+        bottomContent={
+          <ButtonContainer>
+            <DoneScanningBadgeButton
+              onPress={() => this.doneScanning()}
+              underlayColor="#6A7097"
+            >
+              <DoneScanningBadgeButtonText>
+                Done scanning
+              </DoneScanningBadgeButtonText>
+            </DoneScanningBadgeButton>
+            <NextPackageButton
+              onPress={() => this.nextPackage()}
+              underlayColor="#91C53D"
+            >
+              <NextPackageButtonText>Next package</NextPackageButtonText>
+            </NextPackageButton>
+          </ButtonContainer>
+        }
       />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  zeroContainer: {
-    height: 0,
-    flex: 0
-  },
-
-  cameraContainer: {
-    height: Dimensions.get("window").height
-  }
-});
-
 export default Scan;
+
+const ButtonContainer = styled.View`
+  flex: 1;
+  flex-direction: row;
+  margin-top: 25px;
+`;
+
+const NextPackageButton = styled.TouchableHighlight`
+  background-color: #f8662e;
+  height: 70px;
+  width: 150px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NextPackageButtonText = styled.Text`
+  color: #fff;
+  font-size: 16;
+  text-align: center;
+`;
+
+const DoneScanningBadgeButton = styled(NextPackageButton)`
+  background-color: #6f7078;
+  margin-right: 15;
+`;
+
+const DoneScanningBadgeButtonText = styled(NextPackageButtonText)``;
