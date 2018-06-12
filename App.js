@@ -9,7 +9,7 @@ import Packages from "./components/Packages";
 import Scan from "./components/Scan";
 
 // const socketClient = io('http://45.77.159.108:7000');
-const socketClient = io("http://localhost:7000");
+const socketClient = io("http://45.63.12.46:8080");
 
 const mapSocketClientToNavigation = Component => {
   return class extends Component {
