@@ -13,6 +13,16 @@ const socketClient = io("http://45.63.12.46:8080");
 
 const mapSocketClientToNavigation = Component => {
     return class extends Component {
+        state = {
+            timestamp_start_day: null
+        };
+
+        setTimeStamp = timestamp => {
+            this.setState({
+                timestamp_start_day: timestamp
+            });
+        };
+
         render() {
             const { navigation, ...other } = this.props;
             const {
@@ -23,6 +33,8 @@ const mapSocketClientToNavigation = Component => {
                 <Component
                     {...this.props}
                     {...params}
+                    timestamp={this.state.timestamp_start_day}
+                    setTimeStamp={this.setTimeStamp}
                     socketClient={socketClient}
                 />
             );
@@ -79,7 +91,7 @@ const App = TabNavigator(
                 backgroundColor: "#4D1C8A"
             }
         },
-        order: ["Packages", "Scan", "Account"],
+        order: ["Scan", "Packages", "Account"],
         animationEnabled: true
     }
 );
