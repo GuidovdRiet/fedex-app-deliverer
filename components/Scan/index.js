@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import QRCodeScanner from "react-native-qrcode-scanner";
 import styled from "styled-components";
 import { addresses } from "../../helpers/addresses";
+import { StyleSheet } from 'react-native';
 
 class Scan extends Component {
     state = {
@@ -13,15 +14,6 @@ class Scan extends Component {
         this.scanner.reactivate();
     }
 
-<<<<<<< HEAD
-  doneScanning() {
-    this.emitSocket("package:done-scanning", {
-      delivererId: "5ac38977f36d287dbca60345"
-    });
-    const { navigate } = this.props.navigation;
-    navigate("Packages", { name: "Packages" });
-  }
-=======
     doneScanning() {
         const timestamp = Date.now();
         this.emitSocket("package:done-scanning", {
@@ -30,7 +22,6 @@ class Scan extends Component {
         });
         this.props.navigation.navigate("Packages", { timestamp });
     }
->>>>>>> c5d6420f7c7bba1b0db002e89332c10b32f4fd7c
 
     onSuccess(e) {
         const { data } = e;
@@ -88,20 +79,20 @@ export default Scan;
 const ButtonContainer = styled.View`
     flex: 1;
     flex-direction: row;
-    margin-top: 25px;
+    margin-top: 15px;
 `;
 
 const NextPackageButton = styled.TouchableHighlight`
     background-color: #f8662e;
-    height: 70px;
-    width: 150px;
+    height: 50px;
+    width: 100;
     justify-content: center;
     align-items: center;
 `;
 
 const NextPackageButtonText = styled.Text`
     color: #fff;
-    font-size: 16;
+    font-size: 12;
     text-align: center;
 `;
 
