@@ -43,55 +43,59 @@ const mapSocketClientToNavigation = Component => {
 };
 
 const scanStackNavigator = StackNavigator({
-  Scan: { screen: mapSocketClientToNavigation(Scan) },
-  Packages: { screen: mapSocketClientToNavigation(Packages) }
+    Scan: { screen: mapSocketClientToNavigation(Scan) },
+    Packages: { screen: mapSocketClientToNavigation(Packages) }
 });
 
 const App = TabNavigator(
-  {
-    Packages: {
-      screen: mapSocketClientToNavigation(Packages),
-      navigationOptions: {
-        tabBarIcon: (
-          <Icon name="ios-square-outline" type="ionicon" color="#fff" />
-        ),
-        tabBarLabel: "Packages"
-      }
+    {
+        Packages: {
+            screen: mapSocketClientToNavigation(Packages),
+            navigationOptions: {
+                tabBarIcon: (
+                    <Icon
+                        name="ios-square-outline"
+                        type="ionicon"
+                        color="#fff"
+                    />
+                ),
+                tabBarLabel: "Packages"
+            }
+        },
+        Scan: {
+            screen: scanStackNavigator,
+            navigationOptions: {
+                tabBarIcon: (
+                    <Icon
+                        reverse
+                        name="ios-barcode"
+                        type="ionicon"
+                        color="#FC6621"
+                    />
+                ),
+                tabBarLabel: " "
+            }
+        },
+        Account: {
+            screen: mapSocketClientToNavigation(Account),
+            navigationOptions: {
+                tabBarIcon: (
+                    <Icon name="ios-contact" type="ionicon" color="#fff" />
+                ),
+                tabBarLabel: "Account"
+            }
+        }
     },
-    Scan: {
-      screen: scanStackNavigator,
-      navigationOptions: {
-        tabBarIcon: (
-          <Icon
-            reverse
-            name="ios-barcode"
-            type="ionicon"
-            color="#FC6621"
-          />
-        ),
-        tabBarLabel: " "
-      }
-    },
-    Account: {
-      screen: mapSocketClientToNavigation(Account),
-      navigationOptions: {
-        tabBarIcon: (
-          <Icon name="ios-contact" type="ionicon" color="#fff" />
-        ),
-        tabBarLabel: "Account"
-      }
+    {
+        tabBarOptions: {
+            activeTintColor: "#ffffff",
+            style: {
+                backgroundColor: "#4D1C8A"
+            }
+        },
+        order: ["Scan", "Packages", "Account"],
+        animationEnabled: true
     }
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: '#ffffff',
-      style: {
-        backgroundColor: "#4D1C8A"
-      }
-    },
-    order: ["Packages", "Scan", "Account"],
-    animationEnabled: true
-  }
 );
 
 export default () => <App />;

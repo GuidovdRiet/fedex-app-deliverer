@@ -13,15 +13,6 @@ class Scan extends Component {
         this.scanner.reactivate();
     }
 
-<<<<<<< HEAD
-  doneScanning() {
-    this.emitSocket("package:done-scanning", {
-      delivererId: "5ac38977f36d287dbca60345"
-    });
-    const { navigate } = this.props.navigation;
-    navigate("Packages", { name: "Packages" });
-  }
-=======
     doneScanning() {
         const timestamp = Date.now();
         this.emitSocket("package:done-scanning", {
@@ -30,7 +21,6 @@ class Scan extends Component {
         });
         this.props.navigation.navigate("Packages", { timestamp });
     }
->>>>>>> c5d6420f7c7bba1b0db002e89332c10b32f4fd7c
 
     onSuccess(e) {
         const { data } = e;

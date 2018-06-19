@@ -6,10 +6,12 @@ import uniq from "lodash/uniq";
 import { List, ListItem, Button } from "react-native-elements";
 import call from "react-native-phone-call";
 
+console.disableYellowBox = true;
+
 class Packages extends Component {
     static navigationOptions = {
         title: "Packages"
-    }
+    };
 
     state = {
         data: [],
