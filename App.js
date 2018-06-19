@@ -53,7 +53,7 @@ const App = TabNavigator(
       screen: mapSocketClientToNavigation(Packages),
       navigationOptions: {
         tabBarIcon: (
-          <Icon name="ios-square-outline" type="ionicon" color="#fff" />
+          <Icon name="package-down" type="material-community" color="#fff" />
         ),
         tabBarLabel: "Packages"
       }
@@ -64,8 +64,8 @@ const App = TabNavigator(
         tabBarIcon: (
           <Icon
             reverse
-            name="ios-barcode"
-            type="ionicon"
+            name="qrcode-scan"
+            type="material-community"
             color="#FC6621"
           />
         ),
@@ -76,7 +76,7 @@ const App = TabNavigator(
       screen: mapSocketClientToNavigation(Account),
       navigationOptions: {
         tabBarIcon: (
-          <Icon name="ios-contact" type="ionicon" color="#fff" />
+          <Icon name="account" type="material-community" color="#fff" />
         ),
         tabBarLabel: "Account"
       }
