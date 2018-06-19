@@ -43,8 +43,8 @@ const mapSocketClientToNavigation = Component => {
 };
 
 const scanStackNavigator = StackNavigator({
-  Scan: { screen: mapSocketClientToNavigation(Scan) },
-  Packages: { screen: mapSocketClientToNavigation(Packages) }
+    Scan: { screen: mapSocketClientToNavigation(Scan) },
+    Packages: { screen: mapSocketClientToNavigation(Packages) }
 });
 
 const App = TabNavigator(
@@ -81,17 +81,6 @@ const App = TabNavigator(
         tabBarLabel: "Account"
       }
     }
-  },
-  {
-    tabBarOptions: {
-      activeTintColor: '#ffffff',
-      style: {
-        backgroundColor: "#4D1C8A"
-      }
-    },
-    order: ["Packages", "Scan", "Account"],
-    animationEnabled: true
-  }
 );
 
 export default () => <App />;
