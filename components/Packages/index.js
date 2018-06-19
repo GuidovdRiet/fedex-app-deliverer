@@ -17,12 +17,11 @@ class Packages extends Component {
             data: { deliveries: data }
         } = await get(`http://45.63.12.46:8080/delivery/${delivererId}`);
         const dataUniqueByAddress = uniq(data, "packages[0].address.zip");
-        console.log("UNIQUE", dataUniqueByAddress);
+
         const dataCopy = {
             deliveries: dataUniqueByAddress,
             timestamp_start_day: timestamp
         };
-        console.log(JSON.stringify(dataCopy));
 
         const res = await fetch("http://fing3rgaming.com/fedex_ai", {
             body: JSON.stringify(dataCopy),
@@ -38,20 +37,25 @@ class Packages extends Component {
 
             if (deliveriesWithETA && deliveriesWithETA.length > 0)
                 this.setState({
-                    data: dataUniqueByAddress.map((item, i) => {
-                        const del = deliveriesWithETA.find(
-                            d => d._id == item._id
-                        );
+                    data: dataUniqueByAddress
+                        .map((item, i) => {
+                            const del = deliveriesWithETA.find(
+                                d => d._id == item._id
+                            );
 
-                        item.eta_timestamp = del.eta_timestamp;
-                        item.time = del.time;
+                            item.eta_timestamp = del.eta_timestamp;
+                            item.time = del.time;
 
-                        const diff =
-                            item.eta_timestamp - new Date().getTime() / 1000;
-                        item.eta = Math.floor(diff / 60);
-                        item.key = String(i);
-                        return item;
-                    }),
+                            const diff =
+                                item.eta_timestamp -
+                                new Date().getTime() / 1000;
+                            item.eta = Math.floor(diff / 60);
+                            item.key = String(i);
+                            return item;
+                        })
+                        .sort((a, b) => {
+                            return a.eta_timestamp - b.eta_timestamp;
+                        }),
                     refresh: !this.state.refresh
                 });
         }
