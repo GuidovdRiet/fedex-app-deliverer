@@ -12,17 +12,34 @@ import Scan from "./components/Scan";
 const socketClient = io("http://45.63.12.46:8080");
 
 const mapSocketClientToNavigation = Component => {
-  return class extends Component {
-    render() {
-      const { navigation, ...other } = this.props;
-      const {
-        state: { params }
-      } = navigation;
-      return (
-        <Component {...this.props} {...params} socketClient={socketClient} />
-      );
-    }
-  };
+    return class extends Component {
+        state = {
+            timestamp_start_day: null
+        };
+
+        setTimeStamp = timestamp => {
+            this.setState({
+                timestamp_start_day: timestamp
+            });
+        };
+
+        render() {
+            const { navigation, ...other } = this.props;
+            const {
+                state: { params }
+            } = navigation;
+
+            return (
+                <Component
+                    {...this.props}
+                    {...params}
+                    timestamp={this.state.timestamp_start_day}
+                    setTimeStamp={this.setTimeStamp}
+                    socketClient={socketClient}
+                />
+            );
+        }
+    };
 };
 
 const scanStackNavigator = StackNavigator({
