@@ -48,53 +48,38 @@ const scanStackNavigator = StackNavigator({
 });
 
 const App = TabNavigator(
-    {
-        Packages: {
-            screen: mapSocketClientToNavigation(Packages),
-            navigationOptions: {
-                tabBarIcon: (
-                    <Icon
-                        name="ios-square-outline"
-                        type="ionicon"
-                        color="#fff"
-                    />
-                ),
-                tabBarLabel: "Packages"
-            }
-        },
-        Scan: {
-            screen: scanStackNavigator,
-            navigationOptions: {
-                tabBarIcon: (
-                    <Icon
-                        reverse
-                        name="ios-barcode"
-                        type="ionicon"
-                        color="#FC6621"
-                    />
-                ),
-                tabBarLabel: " "
-            }
-        },
-        Account: {
-            screen: mapSocketClientToNavigation(Account),
-            navigationOptions: {
-                tabBarIcon: (
-                    <Icon name="ios-contact" type="ionicon" color="#fff" />
-                ),
-                tabBarLabel: "Account"
-            }
-        }
+  {
+    Packages: {
+      screen: mapSocketClientToNavigation(Packages),
+      navigationOptions: {
+        tabBarIcon: (
+          <Icon name="package-down" type="material-community" color="#fff" />
+        ),
+        tabBarLabel: "Packages"
+      }
     },
-    {
-        tabBarOptions: {
-            activeTintColor: "#ffffff",
-            style: {
-                backgroundColor: "#4D1C8A"
-            }
-        },
-        order: ["Scan", "Packages", "Account"],
-        animationEnabled: true
+    Scan: {
+      screen: scanStackNavigator,
+      navigationOptions: {
+        tabBarIcon: (
+          <Icon
+            reverse
+            name="qrcode-scan"
+            type="material-community"
+            color="#FC6621"
+          />
+        ),
+        tabBarLabel: " "
+      }
+    },
+    Account: {
+      screen: mapSocketClientToNavigation(Account),
+      navigationOptions: {
+        tabBarIcon: (
+          <Icon name="account" type="material-community" color="#fff" />
+        ),
+        tabBarLabel: "Account"
+      }
     }
 );
 
