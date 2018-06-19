@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { TabNavigator } from "react-navigation";
+import { TabNavigator, StackNavigator } from "react-navigation";
 import { Icon } from "react-native-elements";
 import io from "socket.io-client";
 
@@ -25,25 +25,30 @@ const mapSocketClientToNavigation = Component => {
   };
 };
 
+const scanStackNavigator = StackNavigator({
+  Scan: { screen: mapSocketClientToNavigation(Scan) },
+  Packages: { screen: mapSocketClientToNavigation(Packages) }
+});
+
 const App = TabNavigator(
   {
     Packages: {
       screen: mapSocketClientToNavigation(Packages),
       navigationOptions: {
         tabBarIcon: (
-          <Icon name="package-down" type="material-community" color="#fff" />
+          <Icon name="ios-square-outline" type="ionicon" color="#fff" />
         ),
         tabBarLabel: "Packages"
       }
     },
     Scan: {
-      screen: mapSocketClientToNavigation(Scan),
+      screen: scanStackNavigator,
       navigationOptions: {
         tabBarIcon: (
           <Icon
             reverse
-            name="qrcode-scan"
-            type="material-community"
+            name="ios-barcode"
+            type="ionicon"
             color="#FC6621"
           />
         ),
@@ -54,7 +59,7 @@ const App = TabNavigator(
       screen: mapSocketClientToNavigation(Account),
       navigationOptions: {
         tabBarIcon: (
-          <Icon name="account" type="material-community" color="#fff" />
+          <Icon name="ios-contact" type="ionicon" color="#fff" />
         ),
         tabBarLabel: "Account"
       }
@@ -62,6 +67,7 @@ const App = TabNavigator(
   },
   {
     tabBarOptions: {
+      activeTintColor: '#ffffff',
       style: {
         backgroundColor: "#4D1C8A"
       }

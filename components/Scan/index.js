@@ -13,6 +13,8 @@ class Scan extends Component {
     this.emitSocket("package:done-scanning", {
       delivererId: "5ac38977f36d287dbca60345"
     });
+    const { navigate } = this.props.navigation;
+    navigate("Packages", { name: "Packages" });
   }
 
   onSuccess(e) {

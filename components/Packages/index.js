@@ -5,6 +5,10 @@ import { List, ListItem, Button } from "react-native-elements";
 import call from "react-native-phone-call";
 
 class Packages extends Component {
+    static navigationOptions = {
+        title: "Packages"
+    }
+
     state = {
         data: []
     };
